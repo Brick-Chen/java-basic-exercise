@@ -27,7 +27,7 @@ public class GrammarExercise {
         Set<String> m2 = Arrays.stream(secondWordList.split(",")).
                 map(String::toLowerCase).collect(Collectors.toSet());
 
-        return m1.stream().filter(m2::contains).sorted().collect(Collectors.toList());
+        return m1.stream().filter(m2::contains).sorted().map(GrammarExercise::transform).collect(Collectors.toList());
     }
 
     private static boolean valid(String s) {
@@ -47,5 +47,23 @@ public class GrammarExercise {
         return true;
     }
 
+    private static String transform(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        int n = s.length();
+        char[] arr = new char[2 * n - 1];
+        Arrays.fill(arr, ' ');
+
+        int pos = 0;
+        for(int i = 0; i < s.length(); ++i) {
+            char ch = s.charAt(i);
+            char c = Character.isLetter(ch) ? Character.toUpperCase(ch) : ch;
+            arr[pos] = c;
+
+            pos += 2;
+        }
+        return new String(arr);
+    }
 
 }
